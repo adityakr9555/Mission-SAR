@@ -1,4 +1,23 @@
+# Python virtual environment
 .venv/
+venv/
+env/
+
+# Python cache
 __pycache__/
 *.pyc
-.env
+
+# YOLO model
+*.pt
+
+# Video files
+*.mp4
+*.avi
+*.mov
+
+# Generated output files
+sar_alerts.txt
+
+# YOLO generated files
+runs/
+test.jpg
