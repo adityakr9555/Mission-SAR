@@ -1,8 +1,8 @@
 # 🚁 Mission-SAR
 
-> **AI-powered Search & Rescue drone software prototype using Computer Vision.**
+> Computer Vision-Based Search & Rescue Drone Prototype
 
-Mission-SAR is a software prototype that explores how AI and Computer Vision can support autonomous Search & Rescue operations.
+Mission-SAR is a software prototype that demonstrates a computer-vision-based approach to Search & Rescue operations.
 
 The system analyzes video footage to detect and track people, monitor changes in the scene, generate SAR alerts, attach simulated GPS coordinates, and detect potential obstacles.
 
@@ -17,7 +17,7 @@ Mission-SAR combines multiple computer-vision components into one Search & Rescu
 | 👤 Person Detection | Detect people using YOLO |
 | 🎯 Person Tracking | Track detected people using ByteTrack |
 | 👥 People Counting | Monitor the number of tracked people |
-| 🚨 SAR Alerts | Detect significant changes in people count |
+| 🚨 SAR Alerts | Detect changes in people count |
 | 📍 GPS Simulation | Generate simulated coordinates during alerts |
 | 🛑 Obstacle Detection | Detect potential obstacles |
 | 🧭 Direction Detection | Identify obstacle position: Left / Center / Right |
@@ -50,7 +50,7 @@ Mission-SAR combines multiple computer-vision components into one Search & Rescu
               └──────┬───────┘
                      │
                      ▼
-            5 Consecutive Frames
+             5 Consecutive Frames
                      │
                      ▼
               ┌──────────────┐
@@ -64,11 +64,11 @@ Mission-SAR combines multiple computer-vision components into one Search & Rescu
               └──────┬───────┘
                      ▼
               Mission Report
-              
+```
 
-            ```
+---
 
-            ## 🛑 Obstacle Detection
+## 🛑 Obstacle Detection
 
 A separate computer-vision module analyzes each video frame for potential obstacles and determines their position in the frame.
 
@@ -83,10 +83,10 @@ Obstacle Detected?
      │
  ┌───┴───┐
  │       │
- YES     NO
+YES      NO
  │       │
  ▼       ▼
-Check    PATH
+Check   PATH
 Position CLEAR
  │
  ├── LEFT
@@ -109,18 +109,22 @@ The prototype currently checks objects such as:
 
 ## 🧠 Tech Stack
 
-**Language**
+### Language
+
 - Python
 
-**Computer Vision**
+### Computer Vision
+
 - OpenCV
 - YOLO
 - Ultralytics
 
-**Object Tracking**
+### Object Tracking
+
 - ByteTrack
 
-**Development**
+### Development
+
 - VS Code
 - Git
 - GitHub
@@ -144,6 +148,8 @@ Mission-SAR/
 │   ├── easy_test.mp4
 │   └── medium_test.mp4
 │
+├── test_video.mp4
+├── yolo26n.pt
 ├── .gitignore
 ├── README.md
 └── requirements.txt
@@ -189,58 +195,53 @@ Activate the virtual environment on Windows:
 pip install -r requirements.txt
 ```
 
-### 4. Run the Complete SAR System
+### 4. Run Mission-SAR
 
 ```bash
 python src/final_sar_system.py
 ```
 
-The system processes the available test videos and performs:
+The system processes the three test videos and generates SAR alerts with simulated GPS coordinates.
 
-- Person detection
-- Person tracking
-- People counting
-- SAR alert generation
-- GPS simulation
-- Obstacle detection
-
-### 5. Generate the Mission Report
+### 5. Generate Mission Report
 
 ```bash
 python src/mission_report.py
 ```
 
-The report displays the total SAR alerts and logged GPS locations.
+The report summarizes the SAR alerts and GPS locations recorded during the mission run.
 
 ---
 
-## 🧪 Testing & Results
+## 🧪 Testing
 
-The prototype was tested using three different video inputs to evaluate person detection, tracking, SAR alert generation, GPS simulation, and obstacle detection.
+Mission-SAR was tested using three video inputs:
 
-### Test Videos
+- `test_video.mp4`
+- `videos/easy_test.mp4`
+- `videos/medium_test.mp4`
 
-| Video | Purpose |
-|---|---|
-| `test_video.mp4` | Person detection and tracking |
-| `easy_test.mp4` | Basic SAR detection scenario |
-| `medium_test.mp4` | More challenging multi-person scenario |
+The final pipeline successfully processed all three videos.
 
-### System Output
+The system generated:
 
-During testing, the system successfully:
+- Person detection and tracking results
+- People-count changes
+- SAR alerts
+- Simulated GPS coordinates
+- Alert log entries
+- Mission report output
 
-- Detected people using YOLO
-- Tracked detected people using ByteTrack
-- Counted detected persons
-- Generated SAR alerts after sustained changes in people count
-- Logged simulated GPS coordinates with alerts
-- Detected potential obstacles and their frame position
-- Processed all three test videos
+---
 
-### Mission Report
+## 📊 Mission Report
 
-The `mission_report.py` script summarizes the generated SAR alerts and GPS locations.
+The `mission_report.py` script reads the SAR alert log and summarizes:
+
+- Total SAR alerts
+- Logged GPS locations
+- Recent GPS coordinates
+- Mission processing status
 
 Example output:
 
@@ -262,34 +263,46 @@ Mission Status : COMPLETE
 ======================================
 ```
 
-> Note: GPS coordinates used in this prototype are simulated and are not obtained from a real drone GPS module.
+> `Mission Status : COMPLETE` indicates that the report script completed successfully. It does not represent completion of a real-world rescue mission.
 
 ---
 
 ## ⚠️ Current Limitations
 
-Mission-SAR is currently a software prototype focused on demonstrating AI-based Search and Rescue capabilities.
-
-- GPS coordinates are simulated rather than obtained from real GPS hardware.
-- Obstacle detection is based on video-frame analysis and does not directly control a physical drone.
-- Test scenarios use prerecorded video inputs.
-- The system has not yet been deployed on an actual autonomous drone.
-- Real-world performance may vary depending on lighting, camera quality, environment, and detection accuracy.
+- GPS coordinates are simulated and are not connected to physical GPS hardware.
+- The system currently processes prerecorded video files.
+- Obstacle detection is based on objects detected within the video frame.
+- Direction detection identifies obstacle position as Left, Center, or Right.
+- The prototype does not directly control a physical drone.
+- Real-world flight testing has not been performed.
 
 ---
 
 ## 🔮 Future Development
 
-The project can be extended toward a more complete autonomous Search and Rescue system.
+- Integrate real GPS hardware for live drone coordinates.
+- Add real-time camera input instead of prerecorded videos.
+- Improve obstacle detection with depth estimation.
+- Connect obstacle detection with actual drone flight-control systems.
+- Add thermal-camera support for low-visibility search scenarios.
+- Improve person detection and tracking for complex environments.
+- Add mission-map visualization for detected locations and alerts.
 
-### Planned Improvements
+---
 
-- 🛰️ Integration with real GPS hardware
-- 🚁 Real-time drone telemetry
-- 🧭 Autonomous waypoint navigation
-- 🛑 Real-time obstacle avoidance and flight control
-- 🌡️ Thermal-camera-based person detection
-- 🧠 Advanced person tracking and re-identification
-- 🗺️ Live search-area mapping
-- 📡 Real-time communication with a ground station
-- 🚨 Improved emergency alert and rescue coordination
+## 📌 Project Status
+
+**Current Status:** Working Software Prototype
+
+The current implementation demonstrates the core computer-vision and mission-monitoring pipeline using prerecorded test videos.
+
+---
+
+## 👨‍💻 Author
+
+**Aditya Kumar**
+
+B.Tech CSE (AIML)
+
+GitHub:  
+https://github.com/adityakr9555
