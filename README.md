@@ -324,6 +324,15 @@ Mission-SAR was tested using three prerecorded video scenarios to verify the mai
 
 The system processes all three test videos and generates the corresponding video outputs and mission monitoring data.
 
+### Test Result
+
+The latest test run processed all three test videos successfully.
+
+- Total SAR alerts generated: **36**
+- GPS locations logged: **36**
+- Test videos processed: **3**
+- Mission report generated successfully
+
 > **Note:** GPS coordinates used in this prototype are simulated and are not obtained from a physical drone GPS module.
 
 ---
