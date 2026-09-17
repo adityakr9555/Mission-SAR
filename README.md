@@ -298,6 +298,37 @@ The current implementation demonstrates the core computer-vision and mission-mon
 
 ---
 
+## 🧪 Testing & Results
+
+Mission-SAR was tested using three prerecorded video scenarios to verify the main computer-vision pipeline.
+
+### Test Scenarios
+
+| Test Video | Purpose |
+|---|---|
+| `test_video.mp4` | Person detection, tracking and SAR alert testing |
+| `easy_test.mp4` | Basic person detection and tracking |
+| `medium_test.mp4` | Person detection, tracking and alert generation |
+
+### Verified Components
+
+- YOLO-based person detection
+- ByteTrack-based person tracking
+- People counting using tracking IDs
+- SAR alerts based on consecutive frame changes
+- Simulated GPS coordinates during alerts
+- Obstacle detection and direction identification
+- Mission report generation
+
+### Output
+
+The system processes all three test videos and generates the corresponding video outputs and mission monitoring data.
+
+> **Note:** GPS coordinates used in this prototype are simulated and are not obtained from a physical drone GPS module.
+
+---
+
+
 ## 👨‍💻 Author
 
 **Aditya Kumar**
