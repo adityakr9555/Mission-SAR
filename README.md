@@ -267,6 +267,24 @@ Mission Status : COMPLETE
 
 ---
 
+## 📸 Project Evidence
+
+### 1. Person Detection & Tracking
+
+![Person Detection & Tracking](evidence/01_person_tracking_obstacle.png)
+
+### 2. SAR Alert & GPS
+
+![SAR Alert & GPS](evidence/02_sar_alert_gps.png)
+
+### 3. Obstacle Detection
+
+![Obstacle Detection](evidence/03_obstacle_detection.png)
+
+### 4. Mission Report
+
+![Mission Report](evidence/04_mission_report.png)
+
 ## ⚠️ Current Limitations
 
 - GPS coordinates are simulated and are not connected to physical GPS hardware.
