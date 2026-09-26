@@ -20,11 +20,12 @@ with open(log_file, "w", encoding="utf-8") as file:
 total_alerts = 0
 
 
-# Three test videos
+# Four test videos
 videos = [
     "test_video.mp4",
     "videos/easy_test.mp4",
-    "videos/medium_test.mp4"
+    "videos/medium_test.mp4",
+    "videos/movement_test.mp4"
 ]
 
 
@@ -55,25 +56,26 @@ for video_path in videos:
         print("Error: Could not open video:", video_path)
         continue
 
-
     # Get video information
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
 
-
     if fps == 0:
         fps = 30
-
 
     # Create output filename
     if video_path == "test_video.mp4":
         output_path = "sar_output.mp4"
+
     elif video_path == "videos/easy_test.mp4":
         output_path = "easy_test_output.mp4"
-    else:
+
+    elif video_path == "videos/medium_test.mp4":
         output_path = "medium_test_output.mp4"
 
+    else:
+        output_path = "movement_test_output.mp4"
 
     # Create video writer
     fourcc = cv2.VideoWriter_fourcc(*"mp4v")
@@ -85,13 +87,11 @@ for video_path in videos:
         (frame_width, frame_height)
     )
 
-
     # SAR alert variables
     previous_count = 0
     change_frames = 0
     REQUIRED_FRAMES = 5
     frame_number = 0
-
 
     while True:
 
@@ -100,9 +100,7 @@ for video_path in videos:
         if not ret:
             break
 
-
         frame_number += 1
-
 
         # YOLO person tracking
         results = model.track(
@@ -113,50 +111,41 @@ for video_path in videos:
             verbose=False
         )
 
-
         # Store person tracking IDs
         person_ids = []
-
 
         if results[0].boxes.id is not None:
 
             track_ids = results[0].boxes.id.int().cpu().tolist()
             classes = results[0].boxes.cls.int().cpu().tolist()
 
-
             for track_id, class_id in zip(track_ids, classes):
 
+                # Class 0 = person
                 if class_id == 0:
                     person_ids.append(track_id)
-
 
         # Count unique people
         current_count = len(set(person_ids))
 
-
         # Detect potential obstacles
         obstacle_detected = False
         direction = "NONE"
-
 
         for box in results[0].boxes:
 
             class_id = int(box.cls[0])
             class_name = model.names[class_id]
 
-
             if class_name in obstacle_classes:
 
                 obstacle_detected = True
 
-
                 # Get obstacle bounding box
                 x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
 
-
                 # Find obstacle center
                 obstacle_center_x = (x1 + x2) / 2
-
 
                 # Divide frame into three zones
                 if obstacle_center_x < frame_width / 3:
@@ -168,9 +157,7 @@ for video_path in videos:
                 else:
                     direction = "RIGHT"
 
-
                 break
-
 
         # Check for people count change
         if current_count != previous_count:
@@ -178,22 +165,18 @@ for video_path in videos:
         else:
             change_frames = 0
 
-
         # Create SAR alert after 5 consecutive changed frames
         if change_frames >= REQUIRED_FRAMES:
 
             total_alerts += 1
 
-
             # Get simulated GPS location
             latitude, longitude = get_gps_location()
-
 
             # Get current time
             current_time = datetime.now().strftime(
                 "%Y-%m-%d %H:%M:%S"
             )
-
 
             # Print alert
             print()
@@ -205,7 +188,6 @@ for video_path in videos:
             print(
                 f"GPS: {latitude:.6f}, {longitude:.6f}"
             )
-
 
             # Save alert to log file
             with open(log_file, "a", encoding="utf-8") as file:
@@ -228,15 +210,12 @@ for video_path in videos:
                 )
                 file.write("------------------------\n")
 
-
             # Reset alert condition
             previous_count = current_count
             change_frames = 0
 
-
         # Annotated frame
         annotated_frame = results[0].plot()
-
 
         # Show people count
         cv2.putText(
@@ -249,13 +228,11 @@ for video_path in videos:
             2
         )
 
-
         # Show obstacle status
         if obstacle_detected:
             obstacle_text = "OBSTACLE DETECTED"
         else:
             obstacle_text = "PATH CLEAR"
-
 
         cv2.putText(
             annotated_frame,
@@ -267,11 +244,10 @@ for video_path in videos:
             2
         )
 
-
-        # Show direction
+        # Show obstacle direction
         cv2.putText(
             annotated_frame,
-            f"Direction: {direction}",
+            f"Obstacle Direction: {direction}",
             (20, 110),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.8,
@@ -279,22 +255,20 @@ for video_path in videos:
             2
         )
 
-
         # Write frame to output video
         out.write(annotated_frame)
-
 
     # Release video resources
     cap.release()
     out.release()
 
-
     print("Output created:", output_path)
 
 
+# Final mission result
 print()
 print("======================================")
 print("MISSION-SAR FINAL SYSTEM COMPLETE")
-print("All 3 videos processed!")
+print("All 4 videos processed!")
 print("Total SAR Alerts:", total_alerts)
 print("======================================")
