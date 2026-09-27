@@ -372,6 +372,9 @@ Mission Status : COMPLETE
 
 ![Mission Report](evidence/04_mission_report.png)
 
+### 5. Person Detection & Tracking
+![Person Detection & Tracking](evidence/05_person_detection_tracking.png)
+
 ## ⚠️ Current Limitations
 
 - GPS coordinates are simulated and are not connected to physical GPS hardware.
