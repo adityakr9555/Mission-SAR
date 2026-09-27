@@ -356,24 +356,20 @@ Mission Status : COMPLETE
 
 ## 📸 Project Evidence
 
-### 1. Person Detection & Tracking
-
-![Person Detection & Tracking](evidence/01_person_tracking_obstacle.png)
+### 1. Person Tracking & Obstacle Monitoring
+![Person Tracking & Obstacle Monitoring](evidence/01_person_tracking_obstacle.png)
 
 ### 2. SAR Alert & GPS
-
 ![SAR Alert & GPS](evidence/02_sar_alert_gps.png)
 
 ### 3. Obstacle Detection
-
 ![Obstacle Detection](evidence/03_obstacle_detection.png)
 
 ### 4. Mission Report
-
 ![Mission Report](evidence/04_mission_report.png)
 
-### 5. Person Detection & Tracking
-![Person Detection & Tracking](evidence/05_person_detection_tracking.png)
+### 5. Person Detection & Tracking — Movement Test
+![Person Detection & Tracking — Movement Test](evidence/05_person_detection_tracking.png)
 
 ## ⚠️ Current Limitations
 
